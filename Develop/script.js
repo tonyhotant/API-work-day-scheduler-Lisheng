@@ -13,36 +13,64 @@ $(document).ready(function() {
     "2pm",
     "3pm",
     "4pm",
-    "5pm"
+    "5pm",
+    "6pm",
+    "7pm",
+    "8pm"
   ];
 
-  var nowTime = moment()
+  var nowTime = parseInt(moment()
     .format("LT")
-    .charAt(0);  
+    .match(/\d+/));
+
   for (var i = 0; i < businessHours.length; i++) {
-    var workTime = businessHours[i].charAt(0);
-    //TO DO
-    //find way to compare with 11am and 12am
+    var workTime = parseInt(businessHours[i].match(/\d+/g));
+
     $(".container").append(
       $("<div>", { class: "row" }).append([
         $("<div>", { class: "time-block col-md-2" }).text(businessHours[i]),
-        $("<div>", { class: "description col-md-8" }),
+        $("<div>", { class: "description col-md-8 future" }),
         $("<button>", { class: "saveBtn col-md-2" })
       ])
     );
-    if (nowTime < workTime) {
-      $(".description").addClass("past");
-    } else if (nowTime == workTime) {
-      $(".description").addClass("present");
-    } else if (nowTime > workTime) {
-      $(".description").addClass("future");
-    }
-  }
 
+    // if (nowTime == workTime) {
+    //   $(".description")
+    //     .last()
+    //     .removeClass("future")
+    //     .addClass("present");
+    //   }
+
+
+    console.log(nowTime == workTime);
+    console.log(typeof(nowTime));
+    console.log(typeof(workTime));
+    console.log("now is " + nowTime);
+    console.log("work time is " + workTime);  
+
+    while (nowTime !== workTime) {
+      $(".description").removeClass("future").addClass("past");
+    }
+
+    if (nowTime == workTime) {
+      $(".description")
+        .last()
+        .removeClass("future")
+        .addClass("present");
+    }
+
+
+
+
+
+
+    }
 
 
 
   
 
 
+
+  
 });
