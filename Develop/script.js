@@ -5,72 +5,68 @@ $(document).ready(function() {
   }, 1000);
 
   var businessHours = [
-    "9am",
-    "10am",
-    "11am",
-    "12am",
-    "1pm",
-    "2pm",
-    "3pm",
-    "4pm",
-    "5pm",
-    "6pm",
-    "7pm",
-    "8pm"
+    "9AM",
+    "10AM",
+    "11AM",
+    "12AM",
+    "1PM",
+    "2PM",
+    "3PM",
+    "4PM",
+    "5PM"
   ];
 
-  var nowTime = parseInt(moment()
-    .format("LT")
-    .match(/\d+/));
+  var nowTime = parseInt(
+    moment()
+      .format("LT")
+      .match(/\d+/)
+  );
 
   for (var i = 0; i < businessHours.length; i++) {
     var workTime = parseInt(businessHours[i].match(/\d+/g));
 
     $(".container").append(
       $("<div>", { class: "row" }).append([
-        $("<div>", { class: "time-block col-md-2" }).text(businessHours[i]),
-        $("<div>", { class: "description col-md-8 future" }),
+        $("<div>", { class: "time-block hour col-md-2" }).text(
+          businessHours[i]
+        ),
+        $("<label>", { class: "description col-md-8 future" }).append(
+          "<textarea>"
+        ),
         $("<button>", { class: "saveBtn col-md-2" })
       ])
     );
 
-    // if (nowTime == workTime) {
-    //   $(".description")
-    //     .last()
-    //     .removeClass("future")
-    //     .addClass("present");
-    //   }
-
-
-    console.log(nowTime == workTime);
-    console.log(typeof(nowTime));
-    console.log(typeof(workTime));
-    console.log("now is " + nowTime);
-    console.log("work time is " + workTime);  
-
-    while (nowTime !== workTime) {
-      $(".description").removeClass("future").addClass("past");
-    }
-
     if (nowTime == workTime) {
       $(".description")
-        .last()
         .removeClass("future")
+        .addClass("past");
+
+      $(".description")
+        .last()
+        .removeClass("past")
         .addClass("present");
     }
+  }
+
+  $(".saveBtn").on("click", function(event) {
+    event.preventDefault();
+    var task = $("textarea").val();
+    console.log(task);
+    localStorage.setItem("event", task);
+
+
+
+
+  });
 
 
 
 
 
 
-    }
 
-
-
-  
-
-
-
-  
 });
+
+//TO DO:
+// 1. AM PM check
