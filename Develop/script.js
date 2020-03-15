@@ -53,20 +53,17 @@ $(document).ready(function() {
     event.preventDefault();
     var task = $("textarea").val();
     console.log(task);
-    localStorage.setItem("event", task);
-
-
-
-
+    localStorage.setItem("event", JSON.stringify(task));
   });
 
+  function init() {
+    var history = JSON.parse(localStorage.getItem("task"));
+    $(".textarea").text(history);
+  }
 
-
-
-
-
-
+  init();
 });
 
 //TO DO:
 // 1. AM PM check
+// 2. info stay in page after refresh
