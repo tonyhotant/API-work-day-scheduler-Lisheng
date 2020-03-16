@@ -30,9 +30,9 @@ $(document).ready(function() {
         $("<div>", { class: "time-block hour col-md-2" }).text(
           businessHours[i]
         ),
-        $("<label>", { class: "description col-md-8 future" }).append(
-          "<textarea>"
-        ),
+        $("<label>", { class: "description col-md-8 future" })
+          .append("<textarea>")
+          .attr("data-index", i),
         $("<button>", { class: "saveBtn col-md-2" })
       ])
     );
@@ -51,14 +51,16 @@ $(document).ready(function() {
 
   $(".saveBtn").on("click", function(event) {
     event.preventDefault();
-    var task = $("textarea").val();
-    console.log(task);
-    localStorage.setItem("event", JSON.stringify(task));
+    var task = {
+      index: $(".description").attr("data-index"),
+      contents: $("textarea").val()
+    };
+    localStorage.setItem("tasks", JSON.stringify(task));
   });
 
   function init() {
-    var history = JSON.parse(localStorage.getItem("task"));
-    $(".textarea").text(history);
+    var history = JSON.parse(localStorage.getItem(task));
+    console.log(history);
   }
 
   init();
