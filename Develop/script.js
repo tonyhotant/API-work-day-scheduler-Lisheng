@@ -4,7 +4,7 @@ $(document).ready(function() {
     $("#currentDay").text(currentTime);
   }, 1000);
 
-  var businessHours = [
+  var workHours = [
     "9AM",
     "10AM",
     "11AM",
@@ -16,24 +16,24 @@ $(document).ready(function() {
     "5PM"
   ];
 
+  var tasks = [];
+
   var nowTime = parseInt(
     moment()
       .format("LT")
       .match(/\d+/)
   );
 
-  for (var i = 0; i < businessHours.length; i++) {
-    var workTime = parseInt(businessHours[i].match(/\d+/g));
+  for (var i = 0; i < workHours.length; i++) {
+    var workTime = parseInt(workHours[i].match(/\d+/g));
 
     $(".container").append(
       $("<div>", { class: "row" }).append([
-        $("<div>", { class: "time-block hour col-md-2" }).text(
-          businessHours[i]
+        $("<div>", { class: "time-block hour col-md-2" }).text(workHours[i]),
+        $("<label>", { class: "description col-md-8 future" }).append(
+          $("<textarea>", { id: i })
         ),
-        $("<label>", { class: "description col-md-8 future" })
-          .append("<textarea>")
-          .attr("data-index", i),
-        $("<button>", { class: "saveBtn col-md-2" })
+        $("<button>", { class: "saveBtn col-md-2" }).attr("data-index", i)
       ])
     );
 
@@ -47,25 +47,41 @@ $(document).ready(function() {
         .removeClass("past")
         .addClass("present");
     }
+    init();
   }
 
   $(".saveBtn").on("click", function(event) {
     event.preventDefault();
-    var task = {
-      index: $(".description").attr("data-index"),
-      contents: $("textarea").val()
-    };
-    localStorage.setItem("tasks", JSON.stringify(task));
+
+    var index = $(this).attr("data-index");
+
+    var taskText = $("#" + index).val();
+
+    var newTask = { time: index, content: taskText };
+
+    tasks.push(newTask);
+
+    //check duplicate items in array
+    // for ( var i =0; i < tasks.length; i++) {
+    //   if (newTask === tasks[i]) {
+    //     console.log("NO");
+    //     return;
+    //   }
+    // }
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   });
 
   function init() {
-    var history = JSON.parse(localStorage.getItem(task));
-    console.log(history);
-  }
+    var storedTasks = JSON.parse(localStorage.getItem("tasks"));
 
-  init();
+    for (var i = 0; i < storedTasks.length; i++) {
+      var storedIndex = storedTasks[i].time;
+      var storedText = storedTasks[i].content;
+
+      $("#" + storedIndex).text(storedText);
+    }
+  }
 });
 
 //TO DO:
 // 1. AM PM check
-// 2. info stay in page after refresh
