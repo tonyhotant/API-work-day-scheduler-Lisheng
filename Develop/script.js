@@ -9,7 +9,7 @@ $(document).ready(function() {
     "9AM",
     "10AM",
     "11AM",
-    "12AM",
+    "12PM",
     "1PM",
     "2PM",
     "3PM",
@@ -63,19 +63,10 @@ $(document).ready(function() {
     event.preventDefault();
 
     var index = $(this).attr("data-index");
-
     var taskText = $("#" + index).val();
-
-    for (var i = 0; i < tasks.length; i++) {
-      if (taskText == null || tasks.includes(taskText)) {
-        return;
-      }
-    }
-
     var newTask = { time: index, content: taskText };
 
     tasks.push(newTask);
-
     localStorage.setItem("tasks", JSON.stringify(tasks));
   });
 
@@ -95,6 +86,10 @@ $(document).ready(function() {
     if (today !== newDay) {
       localStorage.clear();
     } //reset the page in new day
+
+    if (storedTasks == null) {
+      return;
+    }
 
     for (var i = 0; i < storedTasks.length; i++) {
       var storedIndex = storedTasks[i].time;
