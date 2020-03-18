@@ -36,5 +36,6 @@ The following animation demonstrates the application functionality:
 
 v0.9 16/03/20 initial release
 v1.0 17/3/20 major update
+v1.1 18/3/20 fix duplicate items in array, am pm check, reset new day .etc
 
 ## To do

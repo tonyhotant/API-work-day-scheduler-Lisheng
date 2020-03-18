@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  //display current date and time
   window.setInterval(function() {
     var currentTime = moment().format("MMMM Do YYYY, h:mm:ss a");
     $("#currentDay").text(currentTime);
@@ -22,11 +23,12 @@ $(document).ready(function() {
     moment()
       .format("LT")
       .match(/\d+/)
-  );
+  ); //exact numbers only from time
 
   for (var i = 0; i < workHours.length; i++) {
     var workTime = parseInt(workHours[i].match(/\d+/g));
 
+    //create html elements and style in future as default
     $(".container").append(
       $("<div>", { class: "row" }).append([
         $("<div>", { class: "time-block hour col-md-2" }).text(workHours[i]),
@@ -37,16 +39,14 @@ $(document).ready(function() {
       ])
     );
 
-    // var nowHours =
-    //   nowTime +
-    //   moment()
-    //     .format("LT")
-    //     .slice(-2);
+    var nowHours =
+      nowTime +
+      moment()
+        .format("LT")
+        .slice(-2);
 
-    // if (workHours.includes(nowHours) == false) {
-    //   return;
-    // } else 
-    if (nowTime == workTime) {
+    // render the bar color to represent past or present
+    if (workHours.includes(nowHours) == true && nowTime == workTime) {
       $(".description")
         .removeClass("future")
         .addClass("past");
@@ -94,7 +94,7 @@ $(document).ready(function() {
 
     if (today !== newDay) {
       localStorage.clear();
-    }
+    } //reset the page in new day
 
     for (var i = 0; i < storedTasks.length; i++) {
       var storedIndex = storedTasks[i].time;
