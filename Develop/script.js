@@ -61,9 +61,8 @@ $(document).ready(function() {
 
     tasks.push(newTask);
 
-    //check duplicate items in array
     // for ( var i =0; i < tasks.length; i++) {
-    //   if (newTask === tasks[i]) {
+    //   if (taskText == tasks[i].content && tasks !== []) {
     //     console.log("NO");
     //     return;
     //   }
@@ -85,3 +84,5 @@ $(document).ready(function() {
 
 //TO DO:
 // 1. AM PM check
+// 2. check duplicate item of array
+// 3. reset everything in new day

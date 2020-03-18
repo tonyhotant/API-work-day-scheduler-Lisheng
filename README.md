@@ -34,9 +34,11 @@ The following animation demonstrates the application functionality:
 
 ## Log
 
-v1.0 16/03/20 initial release
+v0.9 16/03/20 initial release
+v1.0 17/3/20 major update
 
 ## To do
 
    1. AM PM check
-   2. info stay in page after refresh
+   2. check duplicate item in array
+   3. reset everything when in new day
