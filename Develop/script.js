@@ -37,15 +37,16 @@ $(document).ready(function() {
       ])
     );
 
-    var nowHours =
-      nowTime +
-      moment()
-        .format("LT")
-        .slice(-2);
+    // var nowHours =
+    //   nowTime +
+    //   moment()
+    //     .format("LT")
+    //     .slice(-2);
 
-    if (workHours.includes(nowHours) == false) {
-      return;
-    } else if (nowTime == workTime) {
+    // if (workHours.includes(nowHours) == false) {
+    //   return;
+    // } else 
+    if (nowTime == workTime) {
       $(".description")
         .removeClass("future")
         .addClass("past");
