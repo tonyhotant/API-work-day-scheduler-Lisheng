@@ -57,16 +57,20 @@ $(document).ready(function() {
 
     var taskText = $("#" + index).val();
 
+    for ( var i =0; i < tasks.length; i++) {
+      if (taskText == null) {
+        return;
+      }
+      else if (taskText == tasks[i].content) {
+        console.log("NO");
+        return;
+      }
+    }    
+
     var newTask = { time: index, content: taskText };
 
     tasks.push(newTask);
 
-    // for ( var i =0; i < tasks.length; i++) {
-    //   if (taskText == tasks[i].content && tasks !== []) {
-    //     console.log("NO");
-    //     return;
-    //   }
-    // }
     localStorage.setItem("tasks", JSON.stringify(tasks));
   });
 
