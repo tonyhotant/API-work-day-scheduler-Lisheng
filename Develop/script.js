@@ -27,9 +27,6 @@ $(document).ready(function() {
   for (var i = 0; i < workHours.length; i++) {
     var workTime = parseInt(workHours[i].match(/\d+/g));
 
-    //need check for am pm here, loop through workHours to check
-    var nowHours = moment().format("LT");
-
     $(".container").append(
       $("<div>", { class: "row" }).append([
         $("<div>", { class: "time-block hour col-md-2" }).text(workHours[i]),
@@ -40,7 +37,15 @@ $(document).ready(function() {
       ])
     );
 
-    if (nowTime == workTime) {
+    var nowHours =
+      nowTime +
+      moment()
+        .format("LT")
+        .slice(-2);
+
+    if (workHours.includes(nowHours) == false) {
+      return;
+    } else if (nowTime == workTime) {
       $(".description")
         .removeClass("future")
         .addClass("past");
@@ -60,14 +65,11 @@ $(document).ready(function() {
 
     var taskText = $("#" + index).val();
 
-    for ( var i =0; i < tasks.length; i++) {
-      if (taskText == null) {
+    for (var i = 0; i < tasks.length; i++) {
+      if (taskText == null || tasks.includes(taskText)) {
         return;
       }
-      else if (taskText == tasks[i].content) {
-        return;
-      }
-    }    
+    }
 
     var newTask = { time: index, content: taskText };
 
@@ -79,8 +81,13 @@ $(document).ready(function() {
   function init() {
     var storedTasks = JSON.parse(localStorage.getItem("tasks"));
 
-    var newDay = moment().format('L').charAt(3) + moment().format('L').charAt(4);
-    console.log(newDay);
+    var newDay =
+      moment()
+        .format("L")
+        .charAt(3) +
+      moment()
+        .format("L")
+        .charAt(4);
 
     var today = newDay;
 
@@ -96,6 +103,3 @@ $(document).ready(function() {
     }
   }
 });
-
-//TO DO:
-// 1. AM PM check

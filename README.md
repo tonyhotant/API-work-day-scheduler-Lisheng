@@ -38,5 +38,3 @@ v0.9 16/03/20 initial release
 v1.0 17/3/20 major update
 
 ## To do
-
-   1. AM PM check
