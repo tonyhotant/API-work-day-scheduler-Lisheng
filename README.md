@@ -40,5 +40,3 @@ v1.0 17/3/20 major update
 ## To do
 
    1. AM PM check
-   2. check duplicate item in array
-   3. reset everything when in new day

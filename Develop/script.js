@@ -27,6 +27,9 @@ $(document).ready(function() {
   for (var i = 0; i < workHours.length; i++) {
     var workTime = parseInt(workHours[i].match(/\d+/g));
 
+    //need check for am pm here, loop through workHours to check
+    var nowHours = moment().format("LT");
+
     $(".container").append(
       $("<div>", { class: "row" }).append([
         $("<div>", { class: "time-block hour col-md-2" }).text(workHours[i]),
@@ -62,7 +65,6 @@ $(document).ready(function() {
         return;
       }
       else if (taskText == tasks[i].content) {
-        console.log("NO");
         return;
       }
     }    
@@ -77,6 +79,15 @@ $(document).ready(function() {
   function init() {
     var storedTasks = JSON.parse(localStorage.getItem("tasks"));
 
+    var newDay = moment().format('L').charAt(3) + moment().format('L').charAt(4);
+    console.log(newDay);
+
+    var today = newDay;
+
+    if (today !== newDay) {
+      localStorage.clear();
+    }
+
     for (var i = 0; i < storedTasks.length; i++) {
       var storedIndex = storedTasks[i].time;
       var storedText = storedTasks[i].content;
@@ -88,5 +99,3 @@ $(document).ready(function() {
 
 //TO DO:
 // 1. AM PM check
-// 2. check duplicate item of array
-// 3. reset everything in new day
