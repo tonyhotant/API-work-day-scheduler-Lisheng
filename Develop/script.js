@@ -55,6 +55,14 @@ $(document).ready(function() {
         .last()
         .removeClass("past")
         .addClass("present");
+    } else if (
+      moment()
+        .format("LT")
+        .slice(-2) == "PM"
+    ) {
+      $(".description")
+        .removeClass("future")
+        .addClass("past");
     }
     init();
   }
