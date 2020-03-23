@@ -46,7 +46,7 @@ $(document).ready(function() {
         .slice(-2);
 
     // render the bar color to represent past or present
-    if (workHours.includes(nowHours) == true && nowTime == workTime) {
+    if (workHours.includes(nowHours) && nowTime == workTime) {
       $(".description")
         .removeClass("future")
         .addClass("past");
