@@ -1,8 +1,9 @@
-$(document).ready(function() {
+$(document).ready(function () {
   //display current date and time
-  window.setInterval(function() {
+  window.setInterval(function () {
     var currentTime = moment().format("MMMM Do YYYY, h:mm:ss a");
     $("#currentDay").text(currentTime);
+    renderBlock();
   }, 1000);
 
   var workHours = [
@@ -14,16 +15,13 @@ $(document).ready(function() {
     "2PM",
     "3PM",
     "4PM",
-    "5PM"
+    "5PM",
   ];
 
   var tasks = [];
 
-  var nowTime = parseInt(
-    moment()
-      .format("LT")
-      .match(/\d+/)
-  ); //exact numbers only from time
+  //exact numbers only from time
+  var nowTime = parseInt(moment().format("LT").match(/\d+/));
 
   for (var i = 0; i < workHours.length; i++) {
     var workTime = parseInt(workHours[i].match(/\d+/g));
@@ -35,31 +33,28 @@ $(document).ready(function() {
         $("<label>", { class: "description col-md-8 future" }).append(
           $("<textarea>", { id: i })
         ),
-        $("<button>", { class: "saveBtn col-md-2" }).attr("data-index", i)
+        $("<button>", { class: "saveBtn col-md-2" })
+          .attr("data-index", i)
+          .append('<i class="fa fa-save"></i>'),
       ])
     );
+    renderBlock();
 
-    var nowHours =
-      nowTime +
-      moment()
-        .format("LT")
-        .slice(-2);
-
-    // render the bar color to represent past or present
-    if (workHours.includes(nowHours) && nowTime == workTime) {
-      $(".description")
-        .removeClass("future")
-        .addClass("past");
-
-      $(".description")
-        .last()
-        .removeClass("past")
-        .addClass("present");
-    } 
     init();
   }
 
-  $(".saveBtn").on("click", function(event) {
+  function renderBlock() {
+    var nowHours = nowTime + moment().format("LT").slice(-2);
+
+    // render the bar color to represent past or present
+    if (workHours.includes(nowHours) && nowTime == workTime) {
+      $(".description").removeClass("future").addClass("past");
+
+      $(".description").last().removeClass("past").addClass("present");
+    }
+  }
+
+  $(".saveBtn").on("click", function (event) {
     event.preventDefault();
 
     var index = $(this).attr("data-index");
@@ -74,18 +69,14 @@ $(document).ready(function() {
     var storedTasks = JSON.parse(localStorage.getItem("tasks"));
 
     var newDay =
-      moment()
-        .format("L")
-        .charAt(3) +
-      moment()
-        .format("L")
-        .charAt(4);
+      moment().format("L").charAt(3) + moment().format("L").charAt(4);
 
     var today = newDay;
 
+    //reset the page in new day
     if (today !== newDay) {
       localStorage.clear();
-    } //reset the page in new day
+    }
 
     if (storedTasks == null) {
       return;
